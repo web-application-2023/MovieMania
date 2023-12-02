@@ -6,16 +6,25 @@
 </head>
 <body>
 <div class="container">
-    <div class="header">Movie Mania</div>
+    <div class="header">
+        <h2>Movie Mania</h2>
+        <div class="header-buttons">
+            <a href="/login" class="button">로그인</a>
+            <a href="/signup" class="button">회원가입</a>
+            <a href="/register" class="button">영화 등록하기</a>
+        </div></div>
     <div>
         <c:forEach items="${movies}" var="movie">
             <div class="movie-info">
-                <div class="movie-title">${movie.title}</div>
-                <div class="movie-detail">장르: ${movie.genre.name}</div>
-                <div class="movie-detail">개봉일: ${movie.releaseDate}</div>
-                <div class="movie-detail">상영 종료일: ${movie.endDate}</div>
-                <div class="movie-detail">상영 중 여부: ${movie.showing ? 'O' : 'X'}</div>
-                <div class="movie-detail">등록일: ${movie.registrationDate}</div>
+                <div>
+                    <div class="movie-title">${movie.title}</div>
+                    <div class="movie-detail">장르: ${movie.genre.name}</div>
+                    <div class="movie-detail">개봉일: ${movie.releaseDate}</div>
+                    <div class="movie-detail">상영 종료일: ${movie.endDate}</div>
+                    <div class="movie-detail">상영 중 여부: ${movie.showing ? 'O' : 'X'}</div>
+                    <div class="movie-detail">등록일: ${movie.registrationDate}</div>
+                </div>
+                <a href="/info?movie_id=${movie.id}" class="detail-button">상세보기</a>
             </div>
         </c:forEach>
     </div>
