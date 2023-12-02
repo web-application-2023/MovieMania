@@ -1,0 +1,77 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  width: 80%;
+  margin: auto;
+  overflow: hidden;
+}
+.header {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.movie-info {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 10px;
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.movie-info:last-child {
+  border-bottom: none;
+}
+.movie-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+.movie-detail {
+  font-size: 14px;
+  color: #666;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 16px;
+}
+.pagination a, .pagination span {
+  margin: 0 10px;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+.pagination a {
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+.pagination a:hover {
+  background-color: #45a049;
+}
+.pagination span {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  border-radius: 5px;
+  min-width: 50px; /* 현재 페이지 번호 박스의 고정된 너비 */
+  text-align: center;
+}
+.pagination-link, .empty-space {
+  min-width: 100px;
+  display: inline-block;
+  text-align: center;
+}
+.empty-space {
+  visibility: hidden; /* 빈 공간 숨기기 */
+}
