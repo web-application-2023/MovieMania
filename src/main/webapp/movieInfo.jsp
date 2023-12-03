@@ -5,13 +5,13 @@
     <style>
       body {
         font-family: 'Arial', sans-serif;
-        background-color: #f8f9fa;
+        background-color: #f4f4f4;
         color: #495057;
         line-height: 1.6;
-        margin: 0 auto;
         padding: 0;
         text-align: center;
         width: 80%;
+        margin: auto;
       }
 
       /* 영화 정보 출력 스타일 */
@@ -21,7 +21,6 @@
         padding: 20px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         margin-bottom: 20px;
-        border-radius: 10px;
       }
 
       .movie-image {
@@ -45,35 +44,49 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: #333;
+        background-color: #282c34; /* 어두운 톤의 배경색 */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
         margin: 0 auto;
-        height: 100px;
+        padding: 10px 20px; /* 패딩 조정 */
+        height: 80px; /* 높이 조정 */
       }
 
       .header > .left, .header > .right {
-        flex: 2;
-        text-align: left; /* 왼쪽 부분은 왼쪽 정렬 */
+        flex: 1;
+        text-align: left;
       }
 
       .header > h2 {
-        flex: 3; /* 중앙 부분을 더 넓게 설정 */
-        font-size: 32px;
-        color: white;
+        flex: 2; /* 중앙 부분 더 넓게 설정 */
+        font-size: 24px; /* 글꼴 크기 조정 */
+        color: #ffffff; /* 글꼴 색상 흰색으로 변경 */
         margin: 0;
         text-align: center;
-        font-weight: bold;
       }
 
       .header > .right {
-        text-align: right; /* 오른쪽 부분은 오른쪽 정렬 */
+        text-align: right;
       }
 
       .header > .left > a {
-        font-size: 32px;
-        color: white;
-        text-decoration: none;
         margin-left: 20px;
+        font-size: 24px;
         font-weight: bold;
+        color: #ffffff; /* 링크 색상 흰색으로 변경 */
+        text-decoration: none;
+        transition: color 0.3s; /* 마우스 오버 효과를 위한 전환 효과 추가 */
+      }
+
+      .header > .left > a:hover, .header > .right > a:hover, .header > h2:hover {
+        color: #4d9fec; /* 마우스 오버 시 색상 변경 */
+      }
+
+      .movie-title-header {
+        text-align: left; /* 왼쪽 정렬 */
+        color: #343a40;
+        font-size: 24px; /* 글꼴 크기 */
+        margin-top: 20px; /* 상단 여백 */
+        margin-bottom: 10px; /* 하단 여백 */
       }
 
       p {
@@ -227,7 +240,6 @@
 
       .review-author {
         font-weight: bold;
-        color: #007bff;
       }
 
       /* 리뷰 본문 스타일 */
@@ -267,26 +279,57 @@
       .pagination span {
         background-color: #f2f2f2;
       }
+
+      .star {
+        color: #ddd; /* 기본 별 색상 */
+        font-size: 30px;
+        cursor: pointer;
+      }
+
+      .star.active {
+        color: #ffc107; /* 활성화된 별 색상 */
+      }
     </style>
 </head>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.star').forEach(star => {
+      star.onclick = () => {
+        const rating = star.getAttribute('data-value');
+        setRating(rating);
+      };
+    });
+  });
+
+  function setRating(rating) {
+    const stars = document.querySelectorAll('.star');
+    document.getElementById('rating').value = rating;
+
+    stars.forEach(star => {
+      star.classList.remove('active');
+      if (star.getAttribute('data-value') <= rating) {
+        star.classList.add('active');
+      }
+    });
+  }
+</script>
 
 <body>
 <div class="header">
     <div class="left">
-        <a href="/main">Movie Mania</a>
+        <a href="/main">&#127902; Movie Mania</a>
     </div>
-    <h2>${movie.title}</h2>
-    <div class="right"></div>
 </div>
 
 
-<!-- 영화 정보 출력 -->
+<h3 class="movie-title-header">${movie.title}</h3>
 <div class="movie-info">
     <div class="movie-image">
         <img src="${movie.imageUrl}" alt="${movie.title}" style="max-width: 100%; height: auto;">
     </div>
     <div class="movie-details">
-        <p><strong>&#128249; 제목:</strong> ${movie.title}</p>
+        <!-- 영화 정보에서 제목 제거 -->
         <p><strong>&#127902; 장르:</strong> ${movie.genre.name}</p>
         <p><strong>&#128197; 상영 여부:</strong> ${movie.showing ? '상영 중' : '상영 종료'}</p>
         <p><strong>&#128197; 개봉일:</strong> ${movie.releaseDate}</p>
@@ -305,7 +348,14 @@
 
     <div class="form-row">
         <label for="rating">평점</label>
-        <input type="number" name="rating" id="rating" min="0" max="5" step="0.5" required>
+        <div class="rating">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+            <input type="hidden" name="rating" id="rating" value="0">
+        </div>
     </div>
 
     <textarea name="content" id="content" placeholder="리뷰 내용을 입력하세요" required></textarea>
