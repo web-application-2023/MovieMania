@@ -20,7 +20,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-height: 80px;
+  height: 100px;
 }
 .header > h2 {
   margin-left: 20px;

@@ -8,15 +8,10 @@
         background-color: #f8f9fa;
         color: #495057;
         line-height: 1.6;
-        margin: 0;
+        margin: 0 auto;
         padding: 0;
         text-align: center;
-      }
-
-      .container {
         width: 80%;
-        margin: auto;
-        overflow: hidden;
       }
 
       h1, h2, h3 {
@@ -24,7 +19,7 @@
       }
 
       /* 영화 정보 출력 스타일 */
-      div {
+      .movie-info {
         background-color: #ffffff;
         padding: 20px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -32,14 +27,49 @@
         border-radius: 10px;
       }
 
-      p {
-        margin: 10px 0;
-      }
-
       /* 리뷰 목록 스타일 */
       h2 {
         margin-bottom: 20px;
         color: #343a40;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #333;
+        margin: 0 auto;
+        height: 100px;
+      }
+
+      .header > .left, .header > .right {
+        flex: 2;
+        text-align: left; /* 왼쪽 부분은 왼쪽 정렬 */
+      }
+
+      .header > h2 {
+        flex: 3; /* 중앙 부분을 더 넓게 설정 */
+        font-size: 32px;
+        color: white;
+        margin: 0;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .header > .right {
+        text-align: right; /* 오른쪽 부분은 오른쪽 정렬 */
+      }
+
+      .header > .left > a {
+        font-size: 32px;
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-weight: bold;
+      }
+
+
+      p {
+        margin: 10px 0;
       }
 
       ul {
@@ -140,10 +170,17 @@
 
 <body>
 
-<h1>${movie.title} 정보 페이지</h1>
+<div class="header">
+    <div class="left">
+        <a href="/main">Movie Mania</a>
+    </div>
+    <h2>${movie.title}</h2>
+    <div class="right"></div>
+</div>
+
 
 <!-- 영화 정보 출력 -->
-<div>
+<div class="movie-info">
     <p><strong>제목:</strong> ${movie.title}</p>
     <p><strong>장르:</strong> ${movie.genre}</p>
     <p><strong>상영 여부:</strong> ${movie.showing ? '상영 중' : '상영 종료'}</p>
