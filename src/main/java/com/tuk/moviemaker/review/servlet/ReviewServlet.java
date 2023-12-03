@@ -37,23 +37,33 @@ public class ReviewServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // 요청으로부터 사용자 정보를 받습니다.
-        String content = request.getParameter("content");
-        Double rating = Double.valueOf(request.getParameter("rating"));
-        Long movie_id = Long.valueOf(request.getParameter("moive_id"));
-        Long member_id = Long.valueOf(request.getParameter("member_id"));
+        request.setCharacterEncoding("UTF-8");
+        try {
+            // 요청으로부터 사용자 정보를 받습니다.
+            String content = request.getParameter("content");
+            Double rating = Double.valueOf(request.getParameter("rating"));
+            Long movie_id = Long.valueOf(request.getParameter("movie_id"));
+            Long member_id = Long.valueOf(request.getParameter("member_id"));
 
-        // id로 영화와 멤버를 찾는다.
-        Movie movie = movieDao.findById(movie_id);
-        Member member = memberDao.findById(member_id);
+            // id로 영화와 멤버를 찾는다.
+            Movie movie = movieDao.findById(movie_id);
+            Member member = memberDao.findById(member_id);
 
-        // 새 Member 객체를 생성하고 값을 설정합니다.
-        Review review = new Review(content, rating, movie, member);
+            // 새 Member 객체를 생성하고 값을 설정합니다.
+            Review review = new Review(content, rating, movie, member);
 
-        // MemberDao를 사용하여 데이터베이스에 저장합니다.
-        reviewDao.save(review);
+            // MemberDao를 사용하여 데이터베이스에 저장합니다.
+            reviewDao.save(review);
 
-        // 처리 결과를 클라이언트에게 응답합니다.
-        response.getWriter().print("Review created with ID: " + review.getId());
+            // 처리 결과를 클라이언트에게 응답합니다.
+            response.getWriter().print("Review created with ID: " + review.getId());
+
+            // 리뷰 등록 후에 지정된 URL로 리다이렉트합니다.
+            response.sendRedirect("/info?movie_id=" + movie_id);
+
+        } catch (Exception e) {
+            // 날짜 변환 오류 처리
+            e.printStackTrace();
+        }
     }
 }
