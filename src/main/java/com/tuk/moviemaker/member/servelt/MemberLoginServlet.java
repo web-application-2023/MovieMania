@@ -42,28 +42,27 @@ public class MemberLoginServlet extends HttpServlet {
       e.printStackTrace();
     }
 
-
     // 요청으로부터 사용자 정보를 받습니다.
     String email = request.getParameter("email");
     String password = request.getParameter("password");
 
     Member member = memberDao.findByEmail(email);
 
-    String memberEmail = member.getEmail();
-    String memberName = member.getName();
-    String memberPassword = member.getPassword();
-
     HttpSession session = request.getSession();
 
-    if (email.equals(memberEmail) && password.equals(memberPassword) ) {
-      session.setAttribute("user_email", memberEmail);
-      session.setAttribute("user_name", memberName);
+    if (member != null) {
+      if(email.equals(member.getEmail()) && password.equals(member.getPassword()) ) {
+        session.setAttribute("user_email", member.getEmail());
+        session.setAttribute("user_name", member.getName());
 
-      response.sendRedirect("/register");
+        response.sendRedirect("/register");
+      }
+      else {
+        response.sendRedirect("login_fail.jsp");
+      }
     }
     else {
       response.sendRedirect("login_fail.jsp");
     }
-
   }
 }
