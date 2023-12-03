@@ -55,7 +55,7 @@ public class MemberLoginServlet extends HttpServlet {
         session.setAttribute("user_email", member.getEmail());
         session.setAttribute("user_name", member.getName());
 
-        response.sendRedirect("/register");
+        response.sendRedirect("/main");
       }
       else {
         response.sendRedirect("login_fail.jsp");
