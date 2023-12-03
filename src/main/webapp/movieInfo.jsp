@@ -162,8 +162,6 @@
 <form action="/review" method="post">
     <!-- 나머지 폼 요소들은 그대로 유지 -->
     <input type="hidden" id="movie_id" name="movie_id" value="${movie.id}">
-    <label for="member_id">Member ID:</label>
-    <input type="text" id="member_id" name="member_id" required><br> <!-- 멤버 ID를 추가 -->
     <label for="content">리뷰 내용:</label>
     <textarea name="content" id="content" required></textarea><br>
     <label for="rating">평점:</label>
@@ -180,6 +178,7 @@
 <%--                <p><strong>작성자:</strong> ${review.author}</p>--%>
                 <p><strong>평점:</strong> ${reviews.rating}</p>
                 <p><strong>내용:</strong> ${reviews.content}</p>
+                <p><strong>작성자:</strong> ${reviews.member.name}</p>
             </li>
         </c:forEach>
     </ul>

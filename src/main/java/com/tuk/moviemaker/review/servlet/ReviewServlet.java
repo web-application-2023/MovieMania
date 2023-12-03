@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/review")
 public class ReviewServlet extends HttpServlet {
@@ -39,18 +40,22 @@ public class ReviewServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         try {
+            // 세션에서 "user_name"을 가져옵니다.
+            HttpSession session = request.getSession();
+            String userEmail = (String) session.getAttribute("user_email");
+
             // 요청으로부터 사용자 정보를 받습니다.
             String content = request.getParameter("content");
             Double rating = Double.valueOf(request.getParameter("rating"));
             Long movie_id = Long.valueOf(request.getParameter("movie_id"));
-            Long member_id = Long.valueOf(request.getParameter("member_id"));
 
             // id로 영화와 멤버를 찾는다.
             Movie movie = movieDao.findById(movie_id);
-            Member member = memberDao.findById(member_id);
+            Member loggedInMember = memberDao.findByEmail(userEmail);
+
 
             // 새 Member 객체를 생성하고 값을 설정합니다.
-            Review review = new Review(content, rating, movie, member);
+            Review review = new Review(content, rating, movie, loggedInMember);
 
             // MemberDao를 사용하여 데이터베이스에 저장합니다.
             reviewDao.save(review);
