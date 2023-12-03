@@ -177,8 +177,9 @@
 
 <!-- 영화 정보 출력 -->
 <div class="movie-info">
+    <img src="${movie.imageUrl}" alt="${movie.title}" style="max-width: 100%; height: auto;">
     <p><strong>제목:</strong> ${movie.title}</p>
-    <p><strong>장르:</strong> ${movie.genre}</p>
+    <p><strong>장르:</strong> ${movie.genre.name}</p>
     <p><strong>상영 여부:</strong> ${movie.showing ? '상영 중' : '상영 종료'}</p>
     <p><strong>개봉일:</strong> ${movie.releaseDate}</p>
     <p><strong>종료일:</strong> ${movie.endDate}</p>
