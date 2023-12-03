@@ -9,11 +9,28 @@
     <div class="header">
         <h2>Movie Mania</h2>
         <div class="header-buttons">
-            <a href="/login" class="button">로그인</a>
-            <a href="/signup" class="button">회원가입</a>
-            <a href="/register" class="button">영화 등록하기</a>
-        </div></div>
-    <div>
+            <c:choose>
+                <c:when test="${isLogin}">
+                    <a href="/logout" onclick="logout()" class="button">로그아웃</a>
+                    <script>
+                      function logout() {
+                        fetch('/logout', { method: 'GET' })
+                        .then(response => {
+                          alert("로그아웃에 성공했습니다.");
+                          window.location.href = '/main';
+                        })
+                        .catch(error => console.error('Error:', error));
+                      }
+                    </script>
+                    <a href="/register" class="button">영화 등록하기</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="/login" class="button">로그인</a>
+                    <a href="/signup" class="button">회원가입</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
         <c:forEach items="${movies}" var="movie">
             <div class="movie-info">
                 <div>
