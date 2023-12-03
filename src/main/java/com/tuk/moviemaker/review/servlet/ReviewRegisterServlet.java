@@ -19,7 +19,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpSession;
 
 @WebServlet("/review")
-public class ReviewServlet extends HttpServlet {
+public class ReviewRegisterServlet extends HttpServlet {
 
     private ReviewDao reviewDao;
     private MemberDao memberDao;
