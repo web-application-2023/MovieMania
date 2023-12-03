@@ -1,45 +1,211 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>영화 정보</title>
-    <!-- 여기에 필요한 스타일 시트 등을 추가할 수 있습니다. -->
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa;
+        color: #495057;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+
+      .container {
+        width: 80%;
+        margin: auto;
+        overflow: hidden;
+      }
+
+      h1, h2, h3 {
+        color: #343a40;
+      }
+
+      /* 영화 정보 출력 스타일 */
+      div {
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        border-radius: 10px;
+      }
+
+      p {
+        margin: 10px 0;
+      }
+
+      /* 리뷰 목록 스타일 */
+      h2 {
+        margin-bottom: 20px;
+        color: #343a40;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 20px;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 15px;
+      }
+
+      .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        font-size: 16px;
+      }
+
+      .pagination a, .pagination span {
+        margin: 0 10px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .pagination a {
+        background-color: #007bff;
+        color: #ffffff;
+        text-decoration: none;
+        transition: background-color 0.3s;
+      }
+
+      .pagination a:hover {
+        background-color: #0056b3;
+      }
+
+      .pagination span {
+        background-color: #f2f2f2;
+        border: 1px solid #dee2e6;
+        flex-grow: 1;
+        text-align: center;
+      }
+
+      .pagination-link, .empty-space {
+        min-width: 100px;
+      }
+
+      .empty-space {
+        display: inline-block;
+      }
+
+      /* 리뷰 등록 폼 스타일 */
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #343a40;
+      }
+
+      input, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-sizing: border-box;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+      }
+
+      button {
+        background-color: #28a745;
+        color: #ffffff;
+        padding: 15px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+    </style>
 </head>
+
+
 <body>
-<h2>영화 정보</h2>
 
-<c:if test="${not empty movie}">
-    <div class="movie-info">
-        <div class="movie-title">${movie.title}</div>
-        <div class="movie-detail">장르: ${movie.genre.name}</div>
-        <div class="movie-detail">개봉일: ${movie.releaseDate}</div>
-        <div class="movie-detail">상영 종료일: ${movie.endDate}</div>
-        <div class="movie-detail">상영 중 여부: ${movie.showing ? 'O' : 'X'}</div>
-        <div class="movie-detail">등록일: ${movie.registrationDate}</div>
-    </div>
-    <!-- 기타 필요한 영화 정보를 표시할 수 있습니다. -->
+<h1>${movie.title} 정보 페이지</h1>
 
-    <!-- 리뷰 정보를 표시할 예시 -->
-    <h3>리뷰</h3>
-    <c:forEach var="review" items="${movie.reviews}">
-        <div class="reviews">
-            <div class="review-writer">${review.member.name}</div>
-            <div class="review-content">${review.content}</div>
+<!-- 영화 정보 출력 -->
+<div>
+    <p><strong>제목:</strong> ${movie.title}</p>
+    <p><strong>장르:</strong> ${movie.genre}</p>
+    <p><strong>상영 여부:</strong> ${movie.showing ? '상영 중' : '상영 종료'}</p>
+    <p><strong>개봉일:</strong> ${movie.releaseDate}</p>
+    <p><strong>종료일:</strong> ${movie.endDate}</p>
+    <p><strong>등록일:</strong> ${movie.registrationDate}</p>
+    <p><strong>등록 회원:</strong> ${movie.member.name}</p>
+</div>
+
+
+<!-- 여기에 리뷰 작성 폼을 추가할 수 있습니다. -->
+<!-- 리뷰 등록 폼 -->
+<h3>리뷰 등록</h3>
+
+<!-- action을 원하는 URL로 변경 -->
+<form action="/review" method="post">
+    <!-- 나머지 폼 요소들은 그대로 유지 -->
+    <input type="hidden" id="movie_id" name="movie_id" value="${movie.id}">
+    <label for="member_id">Member ID:</label>
+    <input type="text" id="member_id" name="member_id" required><br> <!-- 멤버 ID를 추가 -->
+    <label for="content">리뷰 내용:</label>
+    <textarea name="content" id="content" required></textarea><br>
+    <label for="rating">평점:</label>
+    <input type="number" name="rating" id="rating" min="0" max="10" step="0.1" required><br>
+    <button type="submit" value="리뷰 등록">Register Review</button>
+</form>
+
+<!-- 리뷰 출력 -->
+<h2>리뷰 목록</h2>
+<c:if test="${not empty reviews}">
+    <ul>
+        <c:forEach var="reviews" items="${reviews}">
+            <li>
+<%--                <p><strong>작성자:</strong> ${review.author}</p>--%>
+                <p><strong>평점:</strong> ${reviews.rating}</p>
+                <p><strong>내용:</strong> ${reviews.content}</p>
+            </li>
+        </c:forEach>
+    </ul>
+    <div class="pagination">
+        <div class="pagination-link">
+            <c:if test="${currentPage > 1}">
+                <a href="?movie_id=${movie.id}&page=${currentPage - 1}&pageSize=${pageSize}">이전 페이지</a>
+            </c:if>
+            <c:if test="${currentPage <= 1}">
+                <span class="empty-space"></span>
+            </c:if>
         </div>
-    </c:forEach>
+        <span>${currentPage}</span>
+        <div class="pagination-link">
+            <c:if test="${currentPage < totalPages}">
+                <a href="?movie_id=${movie.id}&page=${currentPage + 1}&pageSize=${pageSize}">다음 페이지</a>
+            </c:if>
+            <c:if test="${currentPage >= totalPages}">
+                <span class="empty-space"></span>
+            </c:if>
+        </div>
+    </div>
+</c:if>
+<c:if test="${empty reviews}">
+    <p>등록된 리뷰가 없습니다.</p>
 </c:if>
 
-<c:if test="${empty movie}">
-    <p>영화 정보를 찾을 수 없습니다.</p>
-</c:if>
 </body>
 </html>
-
-<%--<h1>Movie Information</h1>--%>
-<%--<% Movie movie = (Movie) request.getAttribute("movie"); %>--%>
-<%--<p>Title: <%= movie.getTitle() %></p>--%>
-<%--<p>Genre: <%= movie.getGenre() %></p>--%>
-<%--<p>Release Date: <%= movie.getReleaseDate() %></p>--%>
-<!-- 기타 영화 정보들을 표시 -->
