@@ -68,7 +68,7 @@
 </script>
 <% } %>
 
-<form action="register" method="post">
+<form action="register" method="post" enctype="multipart/form-data">
   <label for="title">제목</label>
   <input type="text" id="title" name="title" required><br>
 
@@ -87,6 +87,9 @@
 
   <label for="showing">상영 여부</label>
   <input type="checkbox" id="showing" name="showing" value="true" checked><br>
+
+  <label for="image">영화 이미지:</label>
+  <input type="file" id="image" name="image" accept="image/*"><br>
 
   <button type="submit">영화 등록</button>
 </form>

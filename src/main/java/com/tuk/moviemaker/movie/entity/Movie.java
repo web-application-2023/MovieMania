@@ -48,8 +48,11 @@ public class Movie {
     @Column(name = "Registration_Date", updatable = false)
     private LocalDate registrationDate;
 
+    @Column(name = "Image_Url", nullable = true) // null 허용
+    private String imageUrl;
+
     public Movie(String title, Genre genre, Member member, LocalDate releaseDate, LocalDate endDate,
-        boolean showing, LocalDate registrationDate) {
+        boolean showing, LocalDate registrationDate, String imageUrl) {
         this.title = title;
         this.genre = genre;
         this.member = member;
@@ -57,5 +60,6 @@ public class Movie {
         this.endDate = endDate;
         this.showing = showing;
         this.registrationDate = registrationDate;
+        this.imageUrl = imageUrl;
     }
 }

@@ -14,10 +14,6 @@
         width: 80%;
       }
 
-      h1, h2, h3 {
-        color: #343a40;
-      }
-
       /* 영화 정보 출력 스타일 */
       .movie-info {
         background-color: #ffffff;
@@ -193,7 +189,7 @@
 
 <!-- 여기에 리뷰 작성 폼을 추가할 수 있습니다. -->
 <!-- 리뷰 등록 폼 -->
-<h3>리뷰 등록</h3>
+<h2>리뷰 등록</h2>
 
 <!-- action을 원하는 URL로 변경 -->
 <form action="/review" method="post">
